@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/tile_modes">
+        <CheckBoxPreference
+            android:key="pref_enable_adaptive"
+            android:title="@string/adaptive_charging"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_enable_limit"
+            android:title="@string/limit_to_80"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_enable_off"
+            android:title="@string/deactivated"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+</PreferenceScreen>

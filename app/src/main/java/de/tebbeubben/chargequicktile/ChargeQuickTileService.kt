@@ -4,6 +4,7 @@ import android.graphics.drawable.Icon
 import android.provider.Settings
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import androidx.preference.PreferenceManager
 
 class ChargeQuickTileService : TileService() {
 
@@ -27,25 +28,52 @@ class ChargeQuickTileService : TileService() {
     }
 
     override fun onClick() {
+        val modes = enabledModes()
+        val nextMode = modes.nextAfter(currentMode())
+        applyMode(nextMode)
+        updateTile()
+    }
+
+    private fun enabledModes(): List<ChargingTileMode> {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val modes = buildList {
+            if (prefs.getBoolean(PREF_ENABLE_ADAPTIVE, true)) add(ChargingTileMode.ADAPTIVE)
+            if (prefs.getBoolean(PREF_ENABLE_LIMIT, true)) add(ChargingTileMode.LIMIT_80)
+            if (prefs.getBoolean(PREF_ENABLE_OFF, true)) add(ChargingTileMode.OFF)
+        }
+        return if (modes.size >= 2) modes else listOf(ChargingTileMode.ADAPTIVE, ChargingTileMode.LIMIT_80)
+    }
+
+    private fun List<ChargingTileMode>.nextAfter(current: ChargingTileMode): ChargingTileMode {
+        val index = indexOf(current)
+        return if (index == -1) first() else this[(index + 1) % size]
+    }
+
+    private fun currentMode(): ChargingTileMode {
         val adaptiveChargingEnabled = Settings.Secure.getInt(contentResolver, ADAPTIVE_CHARGING_SETTING) == 1
         val chargeOptimizationEnabled = Settings.Secure.getInt(contentResolver, CHARGE_OPTIMIZATION_MODE) == 1
-        when {
-            adaptiveChargingEnabled -> {
-                Settings.Secure.putInt(contentResolver, CHARGE_OPTIMIZATION_MODE, 1)
-                Settings.Secure.putInt(contentResolver, ADAPTIVE_CHARGING_SETTING, 0)
-            }
+        return when {
+            adaptiveChargingEnabled -> ChargingTileMode.ADAPTIVE
+            chargeOptimizationEnabled -> ChargingTileMode.LIMIT_80
+            else -> ChargingTileMode.OFF
+        }
+    }
 
-            chargeOptimizationEnabled -> {
-                Settings.Secure.putInt(contentResolver, CHARGE_OPTIMIZATION_MODE, 0)
-                Settings.Secure.putInt(contentResolver, ADAPTIVE_CHARGING_SETTING, 0)
-            }
-
-            else -> {
+    private fun applyMode(mode: ChargingTileMode) {
+        when (mode) {
+            ChargingTileMode.ADAPTIVE -> {
                 Settings.Secure.putInt(contentResolver, CHARGE_OPTIMIZATION_MODE, 0)
                 Settings.Secure.putInt(contentResolver, ADAPTIVE_CHARGING_SETTING, 1)
             }
+            ChargingTileMode.LIMIT_80 -> {
+                Settings.Secure.putInt(contentResolver, CHARGE_OPTIMIZATION_MODE, 1)
+                Settings.Secure.putInt(contentResolver, ADAPTIVE_CHARGING_SETTING, 0)
+            }
+            ChargingTileMode.OFF -> {
+                Settings.Secure.putInt(contentResolver, CHARGE_OPTIMIZATION_MODE, 0)
+                Settings.Secure.putInt(contentResolver, ADAPTIVE_CHARGING_SETTING, 0)
+            }
         }
-        updateTile()
     }
 
     fun updateTile() {
@@ -64,5 +92,4 @@ class ChargeQuickTileService : TileService() {
         })
         qsTile.updateTile()
     }
-
 }

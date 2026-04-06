@@ -5,6 +5,12 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+val preferenceVersion = "1.2.1"
+
+dependencies {
+    implementation("androidx.preference:preference-ktx:$preferenceVersion")
+}
+
 android {
     namespace = "de.tebbeubben.chargequicktile"
     compileSdk = 36

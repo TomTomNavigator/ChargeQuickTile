@@ -6,4 +6,5 @@
     <string name="charging_optimization">Charging Optimization</string>
     <string name="foreground_notification">Background service active</string>
     <string name="you_can_hide_this_notification">You can hide this notification.</string>
+    <string name="tile_modes">Tile modes</string>
 </resources>
