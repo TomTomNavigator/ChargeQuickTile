@@ -2,7 +2,11 @@
     <string name="app_name">Charging Optimization Quick Settings Tile</string>
     <string name="adaptive_charging">Adaptive Charging</string>
     <string name="limit_to_80">Limit to 80%</string>
+    <string name="off_mode">Off</string>
     <string name="charging_optimization">Charging Optimization</string>
     <string name="foreground_notification">Background service active</string>
     <string name="you_can_hide_this_notification">You can hide this notification.</string>
+    <string name="tile_modes_title">Tile modes</string>
+    <string name="tile_modes_description">Choose which charging modes the quick settings tile cycles through. Keep at least two enabled.</string>
+    <string name="select_at_least_two_modes">Select at least two modes.</string>
 </resources>

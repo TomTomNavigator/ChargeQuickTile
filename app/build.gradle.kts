@@ -5,6 +5,10 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+dependencies {
+    implementation("androidx.core:core-ktx:1.17.0")
+}
+
 android {
     namespace = "de.tebbeubben.chargequicktile"
     compileSdk = 36
@@ -13,8 +17,8 @@ android {
         applicationId = "de.tebbeubben.chargequicktile"
         minSdk = 35
         targetSdk = 36
-        versionCode = 2
-        versionName = "1.5"
+        versionCode = 3
+        versionName = "1.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
