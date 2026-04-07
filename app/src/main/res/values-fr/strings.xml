@@ -2,7 +2,6 @@
     <string name="app_name">Réglage rapide de l\'optimisation de la recharge</string>
     <string name="adaptive_charging">Recharge adaptative</string>
     <string name="limit_to_80">Limiter à 80%</string>
-    <string name="deactivated">Désactivé</string>
     <string name="charging_optimization">Optimisation de la recharge</string>
     <string name="foreground_notification">Service en arrière-plan actif</string>
     <string name="you_can_hide_this_notification">Vous pouvez masquer cette notification.</string>

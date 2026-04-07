@@ -1,6 +1,6 @@
 # Charge Optimization Quick Settings Tile for Pixel Devices (Android 15+)  
   
-A lightweight and minimal Android app that allows Google Pixel users (starting from the December 2024 Android 15 update) to toggle between different charging optimization modes directly from the Quick Settings tile. Designed for convenience, control, and minimal disruption to your usual workflow.  
+A lightweight and minimal Android app that allows Google Pixel users (starting from the December 2024 Android 15 update) to toggle between two charging optimization modes directly from the Quick Settings tile. Designed for convenience, control, and minimal disruption to your usual workflow.  
   
 ## 🚀 Features  
   
@@ -9,8 +9,6 @@ A lightweight and minimal Android app that allows Google Pixel users (starting f
  Leverages alarms and device usage patterns to optimize battery health. Charges to 80%, then completes charging closer to your set alarm clock.  
     - **Limit to 80%**    
  Stops charging once the battery hits 80%. Useful for preserving battery longevity without relying on AI predictions.  
-    - **Off (Fast Charging to 100%)**    
- Disables all optimizations. Charges to 100% as quickly as possible, regardless of schedule or battery health.  
   
 - **Quick Settings Integration**    
  Use the tile directly in your notification shade for seamless switching.  
@@ -59,6 +57,6 @@ A lightweight and minimal Android app that allows Google Pixel users (starting f
 Android 15 introduced granular charging controls on Pixel phones, but switching between them still involves deep-diving into menus. This app simplifies the process by exposing it through a single, intuitive tile.
 
 Use cases:
--  Quickly toggle between fast charging and battery-preserving modes
+-  Quickly switch between the two battery-preserving charging modes
 -  Manually override Adaptive Charging based on context
 -  Reduce battery wear on days when you're mostly on-the-go

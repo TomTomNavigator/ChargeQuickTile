@@ -13,8 +13,8 @@ android {
         applicationId = "de.tebbeubben.chargequicktile"
         minSdk = 35
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.3"
+        versionCode = 2
+        versionName = "1.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

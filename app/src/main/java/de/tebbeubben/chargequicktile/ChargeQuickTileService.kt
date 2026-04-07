@@ -28,39 +28,29 @@ class ChargeQuickTileService : TileService() {
 
     override fun onClick() {
         val adaptiveChargingEnabled = Settings.Secure.getInt(contentResolver, ADAPTIVE_CHARGING_SETTING) == 1
-        val chargeOptimizationEnabled = Settings.Secure.getInt(contentResolver, CHARGE_OPTIMIZATION_MODE) == 1
-        when {
-            adaptiveChargingEnabled -> {
-                Settings.Secure.putInt(contentResolver, CHARGE_OPTIMIZATION_MODE, 1)
-                Settings.Secure.putInt(contentResolver, ADAPTIVE_CHARGING_SETTING, 0)
-            }
+        val nextModeIsLimitTo80 = adaptiveChargingEnabled
 
-            chargeOptimizationEnabled -> {
-                Settings.Secure.putInt(contentResolver, CHARGE_OPTIMIZATION_MODE, 0)
-                Settings.Secure.putInt(contentResolver, ADAPTIVE_CHARGING_SETTING, 0)
-            }
+        Settings.Secure.putInt(contentResolver, CHARGE_OPTIMIZATION_MODE, if (nextModeIsLimitTo80) 1 else 0)
+        Settings.Secure.putInt(contentResolver, ADAPTIVE_CHARGING_SETTING, if (nextModeIsLimitTo80) 0 else 1)
 
-            else -> {
-                Settings.Secure.putInt(contentResolver, CHARGE_OPTIMIZATION_MODE, 0)
-                Settings.Secure.putInt(contentResolver, ADAPTIVE_CHARGING_SETTING, 1)
-            }
-        }
         updateTile()
     }
 
     fun updateTile() {
         val adaptiveChargingEnabled = Settings.Secure.getInt(contentResolver, ADAPTIVE_CHARGING_SETTING) == 1
         val chargeOptimizationEnabled = Settings.Secure.getInt(contentResolver, CHARGE_OPTIMIZATION_MODE) == 1
-        qsTile.state = if (chargeOptimizationEnabled || adaptiveChargingEnabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-        qsTile.subtitle = when {
-            chargeOptimizationEnabled -> getString(R.string.limit_to_80)
-            adaptiveChargingEnabled -> getString(R.string.adaptive_charging)
-            else -> getString(R.string.deactivated)
+        val showingLimitTo80 = chargeOptimizationEnabled && !adaptiveChargingEnabled
+
+        qsTile.state = Tile.STATE_ACTIVE
+        qsTile.subtitle = if (showingLimitTo80) {
+            getString(R.string.limit_to_80)
+        } else {
+            getString(R.string.adaptive_charging)
         }
-        qsTile.icon = Icon.createWithResource(this, when {
-            chargeOptimizationEnabled -> R.drawable.battery_android_frame_shield_24px
-            adaptiveChargingEnabled -> R.drawable.battery_android_frame_plus_24px
-            else -> R.drawable.battery_android_0_24px
+        qsTile.icon = Icon.createWithResource(this, if (showingLimitTo80) {
+            R.drawable.battery_android_frame_shield_24px
+        } else {
+            R.drawable.battery_android_frame_plus_24px
         })
         qsTile.updateTile()
     }
